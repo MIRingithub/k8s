@@ -1,0 +1,31 @@
+apiVersion: apps/v1      # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: app01-web           #penamaan utk pod
+  labels:
+    app: app01-web          #penamaan label utk pod
+spec:
+  replicas: 2               #akan selalu tersedia 2 pod
+  selector:
+    matchLabels:
+      app: app01-web        #match with pv-web
+      tier: frontend        #match with pv-web
+  template:
+    metadata:
+      labels:
+        app: app01-web      #match with pv-web
+        tier: frontend      #match with pv-web
+    spec:
+      containers:
+      - image: geerlingguy/php-apache:5.6
+        name: php-apache
+        ports:
+        - containerPort: 80             #default port wordpress
+          name: php-apache
+        volumeMounts:
+        - name: app01-web-data          #penamaan utk volume mount
+          mountPath: "/var/www/html"    #default direktori nginx
+      volumes:
+      - name: app01-web-data            #match with volume mount
+        persistentVolumeClaim:
+          claimName: app01-web          #match with pvc-web
