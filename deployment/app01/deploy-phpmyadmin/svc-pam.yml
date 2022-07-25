@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app01-phpmyadmin        #name service
+spec:
+  type: NodePort                #type network
+  selector:
+    app: app01-phpmyadmin       #match with pod app01-phpmyadmin
+  ports:
+  - protocol: TCP               #default conf phpmyadmin
+    port: 80                    #default conf phpmyadmin
+    targetPort: 80              #default conf phpmyadmin
