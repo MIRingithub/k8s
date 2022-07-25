@@ -1,1 +1,37 @@
-
+apiVersion:  apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: app01-db            #penamaan utk pod
+  labels:
+    app: app01-db           #penamaan utk label pod
+spec:
+  selector:
+    matchLabels:
+      app: app01-db         #match with pv-db
+      tier: mysql           #match with pv-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: app01-db       #match with pv-db
+        tier: mysql         #match with pv-db
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+        - name: MYSQL_USERNAME          #default conf mysql username
+          value: "root"                 #root for username
+        - name: MYSQL_ROOT_PASSWORD     #default conf mysql password
+          value: "password"             #password for password
+        ports:
+        - containerPort: 3306           #default port mysql
+          name: mysql
+        volumeMounts:
+        - name: app01-db-data           #penamaan utk volume mount
+          mountPath: "/var/lib/mysql"   #default directory mysql
+      volumes:
+      - name: app01-db-data             #match with volume mount
+        persistentVolumeClaim:
+          claimName: app01-db           #match with pvc-db
