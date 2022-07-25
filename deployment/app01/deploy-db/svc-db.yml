@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app01-db            #penamaan utk service
+  labels:                 
+    app: app01-db           #penamaan utk label service
+spec:
+  ports:
+    - port: 3306            #default port mysql
+  selector:
+    app: app01-db           #match with pv-db
+    tier: mysql             #match with pv-db
+  
