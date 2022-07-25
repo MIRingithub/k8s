@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app01-phpmyadmin        #name pod
+  labels:
+    app: app01-phpmyadmin       #name label for pod
+spec:
+  replicas: 1                   #replicate policy
+  selector:
+    matchLabels:
+      app: app01-phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: app01-phpmyadmin
+    spec:
+      containers:
+        - name: phpmyadmin
+          image: phpmyadmin/phpmyadmin      #container image
+          ports:
+            - containerPort: 80             #default port phpmyadmin
+          env:
+            - name: PMA_HOST                #conf phpmyadmin utk mengarahkan ke host
+              value: app01-db               #match with pod app01-db
+            - name: PMA_PORT                #conf phpmyadmin utk mengarahkan ke port
+              value: "3306"                 #match with port pod app01-db
+            - name: MYSQL_USERNAME          #conf phpmyadmin utk mengarahkan ke mysql username
+              value: "root"                 #match with username pod app01-db
+            - name: MYSQL_ROOT_PASSWORD     #conf phpmyadmin utk mengarahkan ke mysql root password
+              value: "password"             #match with password pod app01-db
