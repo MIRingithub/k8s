@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app01-web               #penamaan utk service
+  labels:                 
+    app: app01-web              #penamaan utk label service
+spec:
+  ports:
+    - port: 80                  #default port wordpress
+      nodePort: 30002           #expose port for external
+  selector:
+    app: app01-web              #match with pv-web
+    tier: frontend              #match with pv-web
+  type: NodePort                #type network
