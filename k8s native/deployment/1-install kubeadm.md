@@ -1,6 +1,6 @@
-# Kubernetes : Configure Control Plane Node2022/11/02
+Kubernetes : Configure Control Plane Node2022/11/02
  	
-#### Install Kubeadm to Configure Multi Nodes Kubernetes Cluster.
+Install Kubeadm to Configure Multi Nodes Kubernetes Cluster.
 This example is based on the environment like follows.
 -----------+---------------------------+--------------------------+------------
            |                           |                          |
